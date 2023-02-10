@@ -1,3 +1,26 @@
+    <header>
+      <!-- navigation -->
+      <nav class="navbar navbar-light bg-light justify-content-between">
+        <div class="container">
+          <a class="navbar-brand" href="/">
+            <img
+              src="https://assets-lighthouse.s3.amazonaws.com/uploads/image/file/6227/restaurant-list-logo.png"
+              width="30"
+              height="30"
+              class="d-inline-block align-top"
+              alt="餐廳清單"
+            />
+            Restaurant
+          </a>
+          <a
+            class="navbar-brand d-inline-block align-top"
+            href="/restaurants/new"
+          >新增餐廳</a>
+        </div>
+      </nav>
+      <div class="banner"></div>
+    </header>
+
 <h1 class="mb-1 restaurant-show-title">編輯餐廳資訊 - {{ restaurant.name }}</h1>
 
 <div class="container">
@@ -5,23 +28,23 @@
     <div class="form-floating mb-3">
       <input type="text" class="form-control" id="name" placeholder="蟹堡王" name="name" value="{{ restaurant.name }}"
         required>
-      <label for="name">店名
+      <label for="name">中文名稱
         <span class="text-danger">*
         </span></label>
     </div>
     <div class="form-floating mb-3">
       <input type="text" class="form-control" id="name_en" placeholder="Krusty Krab" name="name_en"
         value="{{ restaurant.name_en }}" required>
-      <label for="name_en">英文店名
+      <label for="name_en">英文名稱
         <span class="text-danger">*
         </span></label>
     </div>
     <div class="form-floating mb-3">
       <select class="form-select" id="category" name="category" value="{{ restaurant.category }}" required>
-        <option selected>咖啡
-        <option>美式</option>
-        <option>中東料理</option>
-        <option>日本料理</option>
+        
+        <option>美式餐廳</option>
+        <option>中東餐廳</option>
+        <option>日本餐廳</option>
         <option>義式餐廳</option>
         <option>其他</option>
       </select>
@@ -32,7 +55,7 @@
     <div class="form-floating mb-3">
       <input type="url" class="form-control" id="image" placeholder="https://" name="image"
         value="{{ restaurant.image }}" required>
-      <label for="image">圖片連結
+      <label for="image">Picture Link
         <span class="text-danger">*
         </span></label>
     </div>
@@ -53,7 +76,7 @@
     <div class="form-floating mb-3">
       <input type="url" class="form-control" id="google_map" placeholder="https://www.google.com.tw/" name="google_map"
         value="{{ restaurant.google_map }}" required>
-      <label for="google_map">Google地圖連結
+      <label for="google_map">Google map Link
         <span class="text-danger">*
         </span></label>
     </div>
@@ -71,7 +94,7 @@
         </span></label>
     </div>
     <div class="text-center">
-      <button type="submit" class="btn btn-primary mb-3">儲存修改</button>
+      <button type="submit" class="btn btn-primary mb-3">save</button>
     </div>
   </form>
 </div>
