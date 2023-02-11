@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Restaurant</title>
     <link rel="stylesheet" href="/stylesheets/bootstrap.css" />
     <link rel="stylesheet" href="/stylesheets/style.css" />
     <script
@@ -15,6 +15,34 @@
 
   <body>
 
+    <header>
+      <!-- navigation -->
+      <nav class="navbar navbar-light bg-light justify-content-between">
+        <div class="container">
+          <a class="navbar-brand" href="/">
+            <img
+              src="https://assets-lighthouse.s3.amazonaws.com/uploads/image/file/6227/restaurant-list-logo.png"
+              width="30"
+              height="30"
+              class="d-inline-block align-top"
+              alt="餐廳清單"
+            />
+              {{#if isAuthenticated}}{{ user.name}}'s {{/if}}
+  Restaurant
+</a>
+{{#if isAuthenticated}}
+  <a href="/users/logout" class="btn btn-outline-dark">Logout</a>
+{{else}}
+  <a href="/users/login" class="btn btn-outline-dark">Login</a>
+{{/if}}
+          </a>
+
+
+          
+        </div>
+      </nav>
+      <div class="banner"></div>
+    </header>
 
     {{{body}}}
 
