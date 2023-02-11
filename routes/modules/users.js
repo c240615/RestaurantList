@@ -1,5 +1,6 @@
 const express = require("express");
 const passport = require("passport");
+const bcrypt = require("bcryptjs");
 const router = express.Router();
 const User = require("../../models/user");
 
@@ -24,26 +25,45 @@ router.get("/register", (req, res) => {
 });
 
 // 提交註冊表單
-router.post("/register", (req, res,next) => {
+router.post("/register", (req, res, next) => {
   const { name, email, password, confirmPassword } = req.body;
+  const errors = [];
+
+  if (!email || !password || !confirmPassword) {
+    errors.push({ message: "帳密欄位都是必填" });
+  }
+  if (password !== confirmPassword) {
+    errors.push({ message: "密碼與確認密碼不相符" });
+  }
+  if (errors.lengh) {
+    return res.render("register", {
+      errors,
+      name,
+      email,
+      password,
+      confirmPassword,
+    });
+  }
   User.findOne({ email })
     .then((user) => {
-      if (user) {       
-        console.log("User already exists.");
-        res.render("register", {
+      if (user) {
+        errors.push({ message: "此 Email 已註冊!" });
+        return res.render("register", {
+          errors,
           name,
           email,
           password,
           confirmPassword,
         });
-      } else {
-        return User.create({          
-          email,
-          password,
-        })
-          .then(() => res.redirect("/"))
-          .catch((err) => console.log(err));
       }
+      return bcrypt.genSalt(10)
+      .then(salt => bcrypt.hash(password, salt))
+      User.create({
+        email,
+        password,
+      })
+        .then(() => res.redirect("/"))
+        .catch((err) => console.log(err));
     })
     .catch((err) => console.log(err));
 });
@@ -70,6 +90,7 @@ router.post('/register', (req, res, next) => {
 // 登出
 router.get("/logout", (req, res) => {
   req.logout();
+  req.flash("success_msg", "成功登出!");
   res.redirect("/users/login");
 });
 

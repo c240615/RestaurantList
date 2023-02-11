@@ -6,11 +6,10 @@ const db = require("../../config/mongoose");
 require("dotenv").config();
 
 db.once("open", () => {
-  console.log("running restaurantSeeder script...");
+  console.log("running");
 
   Restaurant.create(restaurantList)
-    .then(() => {
-      console.log("restaurantSeeder done!");
+    .then(() => {      
       db.close();
     })
     .catch((err) => console.log(err));

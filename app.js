@@ -1,10 +1,14 @@
 const express = require("express");
-const exphbs = require("express-handlebars");
-const methodOverride = require("method-override");
 const session = require("express-session");
-const usePassport = require("./config/passport");
-const routes = require("./routes");
+const exphbs = require("express-handlebars");
 const bodyParser = require("body-parser");
+const methodOverride = require("method-override");
+const flash = require('connect-flash')
+
+const routes = require("./routes");
+const usePassport = require("./config/passport");
+
+
 require("./config/mongoose");
 
 const app = express();
@@ -29,6 +33,8 @@ app.use(
 
 usePassport(app);
 
+app.use(flash())
+
 // middleware 一定要用 next 結束 進入下一個 middleware
 app.use((req, res, next) => {
   console.log(req.user);
@@ -37,6 +43,8 @@ app.use((req, res, next) => {
   res.locals.isAuthenticated = req.isAuthenticated();
   // req.user 存放使用者資料
   res.locals.user = req.user;
+  res.locals.success_msg = req.flash('success_msg')
+  res.locals.warning_msg = req.flash("warning_msg");
   next();
 });
 
