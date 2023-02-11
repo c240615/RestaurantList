@@ -1,5 +1,4 @@
 <html lang="en">
-
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -14,7 +13,6 @@
   </head>
 
   <body>
-
     <header>
       <!-- navigation -->
       <nav class="navbar navbar-light bg-light justify-content-between">
@@ -27,14 +25,14 @@
               class="d-inline-block align-top"
               alt="餐廳清單"
             />
-              {{#if isAuthenticated}}{{ user.name}}'s {{/if}}
-  Restaurant
-</a>
-{{#if isAuthenticated}}
-  <a href="/users/logout" class="btn btn-outline-dark">Logout</a>
-{{else}}
-  <a href="/users/login" class="btn btn-outline-dark">Login</a>
-{{/if}}
+            {{#if isAuthenticated}}{{ user.name}}'s {{/if}}
+              Restaurant
+          </a>
+            {{#if isAuthenticated}}
+            <a href="/users/logout" class="btn btn-outline-dark">Logout</a>
+            {{else}}
+            <a href="/users/login" class="btn btn-outline-dark">Login</a>
+            {{/if}}
           </a>
 
 

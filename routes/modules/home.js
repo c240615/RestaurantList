@@ -1,11 +1,13 @@
 const express = require("express");
 const router = express.Router();
-
 const Restaurant = require("../../models/Restaurant");
-// 定義首頁路由
+// 首頁
 router.get("/", (req, res) => {
-  Restaurant.find({})
+  const userId = req.user._id;
+  // console.log(userId);
+  Restaurant.find({ userId: userId })
     .lean()
+    .sort({ _id: "asc" })
     .then((restaurants) => res.render("index", { restaurants }))
     .catch((error) => console.error(error));
 });
@@ -13,7 +15,7 @@ router.get("/", (req, res) => {
 // 搜尋餐廳
 router.get("/search", (req, res) => {
   const keywords = req.query.keyword;
-  const keyword = req.query.keyword.toLowerCase().trim(); // 移除字串起始及結尾處的空白字元
+  const keyword = req.query.keyword.toLowerCase().trim(); 
   Restaurant.find()
     .lean()
     .then((restaurantsData) => {
