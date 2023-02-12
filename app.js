@@ -13,7 +13,7 @@ const usePassport = require("./config/passport");
 require("./config/mongoose");
 
 const app = express();
-const port = process.env.PORT;
+const port = 3000;
 
 app.engine("handlebars", exphbs.engine({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
