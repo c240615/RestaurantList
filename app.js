@@ -3,11 +3,10 @@ const session = require("express-session");
 const exphbs = require("express-handlebars");
 const bodyParser = require("body-parser");
 const methodOverride = require("method-override");
-const flash = require('connect-flash')
+const flash = require("connect-flash");
 
 const routes = require("./routes");
 const usePassport = require("./config/passport");
-
 
 require("./config/mongoose");
 
@@ -33,18 +32,17 @@ app.use(
 
 usePassport(app);
 
-app.use(flash())
+app.use(flash());
 
 // middleware 一定要用 next 結束 進入下一個 middleware
 app.use((req, res, next) => {
-  console.log(req.user);
-  console.log(req.isAuthenticated());
+  //console.log(req.user);
+  //console.log(req.isAuthenticated());
   // req.isAuthenticated() 回傳的布林值
   res.locals.isAuthenticated = req.isAuthenticated();
-  // req.user 存放使用者資料
   res.locals.user = req.user;
-  res.locals.success_msg = req.flash('success_msg')
-  res.locals.warning_msg = req.flash("warning_msg");
+  res.locals.success_msg = req.flash("success_msg"); // 設定 success_msg 訊息
+  res.locals.warning_msg = req.flash("warning_msg"); // 設定 warning_msg 訊息
   next();
 });
 

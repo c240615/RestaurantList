@@ -25,17 +25,16 @@ router.get("/register", (req, res) => {
 });
 
 // 提交註冊表單
-router.post("/register", (req, res, next) => {
+router.post("/register", (req, res) => {
   const { name, email, password, confirmPassword } = req.body;
   const errors = [];
-
   if (!email || !password || !confirmPassword) {
-    errors.push({ message: "帳密欄位都是必填" });
+    errors.push({ message: "請輸入正確的電子信箱及密碼" });
   }
   if (password !== confirmPassword) {
-    errors.push({ message: "密碼與確認密碼不相符" });
+    errors.push({ message: "密碼與確認密碼不相符！" });
   }
-  if (errors.lengh) {
+  if (errors.length) {
     return res.render("register", {
       errors,
       name,
@@ -44,48 +43,31 @@ router.post("/register", (req, res, next) => {
       confirmPassword,
     });
   }
-  User.findOne({ email })
-    .then((user) => {
-      if (user) {
-        errors.push({ message: "此 Email 已註冊!" });
-        return res.render("register", {
-          errors,
-          name,
-          email,
-          password,
-          confirmPassword,
-        });
-      }
-      return bcrypt.genSalt(10)
-      .then(salt => bcrypt.hash(password, salt))
-      User.create({
+  return User.findOne({ email }).then((user) => {
+    if (user) {
+      errors.push({ message: "這個 Email 已經註冊過了。" });
+      return res.render("register", {
+        errors,
+        name,
         email,
         password,
-      })
-        .then(() => res.redirect("/"))
-        .catch((err) => console.log(err));
-    })
-    .catch((err) => console.log(err));
+        confirmPassword,
+      });
+    }
+    return bcrypt
+      .genSalt(10) // 產生「鹽」，並設定複雜度係數為 10
+      .then((salt) => bcrypt.hash(password, salt)) // 為使用者密碼「加鹽」，產生雜湊值
+      .then((hash) =>
+        User.create({
+          name,
+          email,
+          password: hash, // 用雜湊值取代原本的使用者密碼
+        })
+      )
+      .then(() => res.redirect("/"))
+      .catch((err) => console.log(err));
+  });
 });
-
-/*
-router.post('/register', (req, res, next) => {
-  const { name, email, password, confirmPassword } = req.body
-  if (!email || !password || !confirmPassword) throw new Error('Email and Password is required!')
-  if (password !== confirmPassword) throw new Error('Password do not match!')
-  return User.findOne({ email })
-    .then(user => {
-      if (user) throw new Error('User already exists!')
-      return bcrypt
-        .genSalt(10)
-        .then(salt => bcrypt.hash(password, salt))
-        .then(hash => User.create({ name, email, password: hash }))
-        .then(() => res.redirect('/'))
-        .catch(err => next(err))
-    })
-    .catch(err => next(err))
-})
-*/
 
 // 登出
 router.get("/logout", (req, res) => {
