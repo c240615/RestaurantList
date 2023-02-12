@@ -1,6 +1,6 @@
-# fly.toml file generated for black-waterfall-4267 on 2023-02-12T19:58:59+08:00
+# fly.toml file generated for delicate-lake-3110 on 2023-02-12T21:31:18+08:00
 
-app = "black-waterfall-4267"
+app = "delicate-lake-3110"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
