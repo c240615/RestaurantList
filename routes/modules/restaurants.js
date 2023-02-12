@@ -20,7 +20,7 @@ router.post("/", (req, res) => {
     google_map,
     rating,
     description,
-  } = req.body; // const
+  } = req.body; 
   Restaurant.create({
     name,
     name_en,

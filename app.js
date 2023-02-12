@@ -4,7 +4,9 @@ const exphbs = require("express-handlebars");
 const bodyParser = require("body-parser");
 const methodOverride = require("method-override");
 const flash = require("connect-flash");
-
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
 const routes = require("./routes");
 const usePassport = require("./config/passport");
 
@@ -34,15 +36,11 @@ usePassport(app);
 
 app.use(flash());
 
-// middleware 一定要用 next 結束 進入下一個 middleware
-app.use((req, res, next) => {
-  //console.log(req.user);
-  //console.log(req.isAuthenticated());
-  // req.isAuthenticated() 回傳的布林值
+app.use((req, res, next) => { 
   res.locals.isAuthenticated = req.isAuthenticated();
   res.locals.user = req.user;
-  res.locals.success_msg = req.flash("success_msg"); // 設定 success_msg 訊息
-  res.locals.warning_msg = req.flash("warning_msg"); // 設定 warning_msg 訊息
+  res.locals.success_msg = req.flash("success_msg"); 
+  res.locals.warning_msg = req.flash("warning_msg"); 
   next();
 });
 
