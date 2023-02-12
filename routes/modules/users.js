@@ -71,9 +71,11 @@ router.post("/register", (req, res) => {
 
 // 登出
 router.get("/logout", (req, res) => {
-  req.logout();
-  req.flash("success_msg", "成功登出!");
-  res.redirect("/users/login");
+  req.logout(req.user, (err) => {
+    if (err) return next(err);
+    req.flash("success_msg", "成功登出!");
+    res.redirect("/users/login");
+  });
 });
 
 module.exports = router;
