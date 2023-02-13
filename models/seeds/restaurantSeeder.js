@@ -33,15 +33,15 @@ db.once("open", () => {
                 restaurantIndex < 3 * (userIndex + 1)                
               ) {
                 restaurantData.userId = user._id;
-                 console.log(userIndex);                
-                 console.log(restaurantIndex);
-                return Restaurant.create(restaurantData);
+                console.log(userIndex);
+                console.log(restaurantIndex);
+                return Restaurant.create(restaurantData);                
               }else if (restaurantIndex >= 6 && userIndex < 1) {
-                restaurantData.userId = "000000000000aaaaaaaaaaaa";
-                // console.log(userIndex);
-                // console.log(restaurantIndex);
+                restaurantData.userId = user._id;
+                console.log(userIndex);
+                console.log(restaurantIndex);
                 return Restaurant.create(restaurantData);
-              }          
+              }        
             })
           );
         })
