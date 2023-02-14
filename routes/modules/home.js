@@ -14,9 +14,10 @@ router.get("/", (req, res) => {
 
 // 搜尋餐廳
 router.get("/search", (req, res) => {
+  const userid = req.user._id;
   const keywords = req.query.keyword;
   const keyword = req.query.keyword.toLowerCase().trim(); 
-  Restaurant.find()
+  Restaurant.find({ userId: userid })
     .lean()
     .then((restaurantsData) => {
       const filterRestaurantsData = restaurantsData.filter((data) => {
@@ -26,11 +27,12 @@ router.get("/search", (req, res) => {
         );
       });
       if (!filterRestaurantsData.length) {
-        res.render("cannot_found", { restaurants: restaurantsData, keywords });
+        res.render("index", { restaurants: restaurantsData, keywords });
       } else {
         res.render("index", { restaurants: filterRestaurantsData, keyword });
       }
-    });
+    })
+    .catch(err=>console.log(err))
 });
 
 module.exports = router;
